@@ -6,10 +6,10 @@ interface FormData{
     name: string;
     reason: string;
     date: string;
-    believability: string ;
+    believability: number;
     creativity: string;
     extra:string;
-    urgency:string;
+    urgency:boolean;
 }
 
 const Form = () => {
@@ -17,10 +17,10 @@ const Form = () => {
         name:"",
         reason:"",
         date:"",
-        believability:"",
+        believability:0,
         creativity:"",
         extra:"",
-        urgency:""
+        urgency:false
     })
 
     function handleSubmit(e: React.FormEvent){
@@ -28,7 +28,7 @@ const Form = () => {
         console.log("Przesłane dane: ", formData)
     }
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>){
+    function handleChange(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>){
         const {name, value} = event.target
         setFormData(prevState => ({...prevState, [name]: value}))
     }
@@ -110,11 +110,13 @@ const Form = () => {
                     Pilna
                     <input
                         type="checkbox" name="urgency"
-                        value={formData.urgency}
-                        onChange={handleChange}>
+                        checked={formData.urgency}
+                        onChange={() => setFormData({...formData, urgency: !formData.urgency})}>
                     </input>
                 </label>
             </form>
+
+            <button type="submit"> Wyślij dane</button>
         </div>
     )
 
