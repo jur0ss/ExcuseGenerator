@@ -1,50 +1,57 @@
-import {useState} from "react";
+import { useState } from "react";
 import * as React from "react";
-import "./Form.css"
+import "./Form.css";
 
-interface FormData{
+interface FormData {
     name: string;
     reason: string;
     date: string;
     believability: number;
     creativity: string;
-    extra:string;
-    urgency:boolean;
+    extra: string;
+    urgency: boolean;
 }
 
 const Form = () => {
     const [formData, setFormData] = useState<FormData>({
-        name:"",
-        reason:"",
-        date:"",
-        believability:0,
-        creativity:"",
-        extra:"",
-        urgency:false
-    })
+        name: "",
+        reason: "",
+        date: "",
+        believability: 0,
+        creativity: "",
+        extra: "",
+        urgency: false,
+    });
 
-    function handleSubmit(e: React.FormEvent){
-        e.preventDefault()
-        console.log("Przesłane dane: ", formData)
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        console.log("Przesłane dane: ", formData);
     }
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>){
-        const {name, value} = event.target
-        setFormData(prevState => ({...prevState, [name]: value}))
-    }
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value, type, checked } = e.target as HTMLInputElement;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
+    };
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
 
-    return(
+    return (
         <div>
             <h2>Generator wymówek</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Nazwa
                     <input
-                        type="text" name="name"
+                        type="text"
+                        name="name"
                         value={formData.name}
-                        onChange={handleChange}/>
+                        onChange={handleChange}
+                    />
                 </label>
 
                 <label>
@@ -52,8 +59,8 @@ const Form = () => {
                     <select
                         name="reason"
                         value={formData.reason}
-                        onChange={handleChange}>
-
+                        onChange={handleChange}
+                    >
                         <option disabled>Wybierz z listy</option>
                         <option>Spóźnienie</option>
                         <option>Brak pracy domowej</option>
@@ -65,21 +72,26 @@ const Form = () => {
                 <label>
                     Poziom wiarygodności
                     <input
-                        type="range" name="believability"
+                        type="range"
+                        name="believability"
                         value={formData.believability}
-                        min="1" max="10" step="1"
-                        onChange={handleChange}/>
+                        min="1"
+                        max="10"
+                        step="1"
+                        onChange={handleChange}
+                    />
                 </label>
-
 
                 <label>
                     Data zdarzenia
                     <input
-                        type="date" name="date"
+                        type="date"
+                        name="date"
                         value={formData.date}
                         min="2025-01-01"
                         max={today}
-                        onChange={handleChange}/>
+                        onChange={handleChange}
+                    />
                 </label>
 
                 <label>
@@ -87,8 +99,8 @@ const Form = () => {
                     <select
                         name="creativity"
                         value={formData.creativity}
-                        onChange={handleChange}>
-
+                        onChange={handleChange}
+                    >
                         <option disabled>Wybierz z listy</option>
                         <option>Tragedia</option>
                         <option>Kiepsko</option>
@@ -103,24 +115,23 @@ const Form = () => {
                     <textarea
                         name="extra"
                         value={formData.extra}
-                        onChange={handleChange}/>
+                        onChange={handleChange}
+                    />
                 </label>
 
                 <label>
                     Pilna
                     <input
-                        type="checkbox" name="urgency"
+                        type="checkbox"
+                        name="urgency"
                         checked={formData.urgency}
-                        onChange={() => setFormData({...formData, urgency: !formData.urgency})}>
-                    </input>
+                        onChange={handleChange}
+                    />
                 </label>
+                <button type="submit">Wyślij dane</button>
             </form>
-
-            <button type="submit"> Wyślij dane</button>
         </div>
-    )
+    );
+};
 
-
-}
-
-export default Form
+export default Form;
