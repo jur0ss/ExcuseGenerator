@@ -10,10 +10,16 @@ function App() {
         setSubmittedData((prevData) => [...prevData, data]);
     };
 
+    let content = null;
+
+    if (submittedData.length > 0) {
+        content = <Child data={submittedData} />;
+    }
+
     return (
         <>
             <Form onFormSubmit={handleFormSubmit} />
-            {submittedData.length > 0 && <Child data={submittedData} />}
+            {content}
         </>
     );
 }
