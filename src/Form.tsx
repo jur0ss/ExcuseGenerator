@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as React from "react";
 import "./Form.css";
 
-interface FormData {
+export interface Wymowka {
     name: string;
     reason: string;
     date: string;
@@ -13,11 +13,11 @@ interface FormData {
 }
 
 interface Props {
-    onFormSubmit: (data: FormData) => void
+    onFormSubmit: (data: Wymowka) => void;
 }
 
 const Form: React.FC<Props> = ({ onFormSubmit }) => {
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<Wymowka>({
         name: "",
         reason: "",
         date: "",
@@ -25,12 +25,11 @@ const Form: React.FC<Props> = ({ onFormSubmit }) => {
         creativity: "",
         extra: "",
         urgency: false,
-    })
-
+    });
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        onFormSubmit(formData)
+        e.preventDefault();
+        onFormSubmit(formData);
     };
 
     const handleChange = (

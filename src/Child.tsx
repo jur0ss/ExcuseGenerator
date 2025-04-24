@@ -1,33 +1,27 @@
 ﻿import * as React from "react";
+import { Wymowka } from "./Form";
 
 interface Props {
-    data: {
-        name: string,
-        reason: string,
-        date: string,
-        believability: number,
-        creativity: string,
-        extra: string,
-        urgency: boolean
-    }
+    data: Wymowka[];
 }
-
 
 const Child: React.FC<Props> = ({ data }) => {
     return (
         <div>
             <h3>Twoje wymówki:</h3>
-            <ul>
-                <li>Nazwa: {data.name}</li>
-                <li>Powód: {data.reason}</li>
-                <li>Data zdarzenia: {data.date}</li>
-                <li>Wiarygodność: {data.believability}/10</li>
-                <li>Poziom kreatywności: {data.creativity}</li>
-                <li>Dodatkowe szczegóły: {data.extra}</li>
-                <li>Pilna: {data.urgency ? "Tak" : "Nie"}</li>
-            </ul>
+            {data.map((item, index) => (
+                <ul key={index}>
+                    <li>Nazwa: {item.name}</li>
+                    <li>Powód: {item.reason}</li>
+                    <li>Data zdarzenia: {item.date}</li>
+                    <li>Wiarygodność: {item.believability}/10</li>
+                    <li>Poziom kreatywności: {item.creativity}</li>
+                    <li>Dodatkowe szczegóły: {item.extra}</li>
+                    <li>Pilna: {item.urgency ? "Tak" : "Nie"}</li>
+                </ul>
+            ))}
         </div>
-    )
-}
+    );
+};
 
-export default Child
+export default Child;
