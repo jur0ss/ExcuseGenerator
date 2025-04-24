@@ -12,7 +12,11 @@ interface FormData {
     urgency: boolean;
 }
 
-const Form = () => {
+interface Props {
+    onFormSubmit: (data: FormData) => void
+}
+
+const Form: React.FC<Props> = ({ onFormSubmit }) => {
     const [formData, setFormData] = useState<FormData>({
         name: "",
         reason: "",
@@ -21,12 +25,13 @@ const Form = () => {
         creativity: "",
         extra: "",
         urgency: false,
-    });
+    })
 
-    function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        console.log("Przesłane dane: ", formData);
-    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        onFormSubmit(formData)
+    };
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
